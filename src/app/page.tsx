@@ -1,103 +1,244 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { ChevronRight, Utensils } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const router = useRouter();
+  const [step, setStep] = useState(1);
+  const [preferences, setPreferences] = useState({
+    dietType: "regular",
+    familySize: "3",
+    allergies: "",
+    cuisine: "south-indian",
+  });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleChange = (field: string, value: string) => {
+    setPreferences({ ...preferences, [field]: value });
+  };
+
+  const handleNext = () => {
+    if (step < 3) {
+      setStep(step + 1);
+    } else {
+      // Save preferences to localStorage for use in meal plan page
+      localStorage.setItem("mealPreferences", JSON.stringify(preferences));
+      router.push("/meal-plan");
+    }
+  };
+
+  return (
+    <>
+      {/* Add JSON-LD structured data for Recipe */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Indian Meal Planner",
+            url: "https://indian-meal.vercel.app",
+            potentialAction: {
+              "@type": "SearchAction",
+              target:
+                "https://indian-meal.vercel.app/search?q={search_term_string}",
+              "query-input": "required name=search_term_string",
+            },
+          }),
+        }}
+      />
+
+      <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gradient-to-b from-indigo-50 to-orange-200 dark:bg-gradient-to-b dark:from-indigo-900 dark:to-orange-950 relative">
+        <div className="absolute top-4 right-10">
+          <ModeToggle />
         </div>
+        <div className="w-full max-w-md flex flex-col items-center mb-6">
+          <div className="h-16 w-16 rounded-full bg-orange-500 flex items-center justify-center mb-4">
+            <Utensils className="h-8 w-8 text-white" />
+          </div>
+          <h1 className="text-2xl font-bold text-orange-800 dark:text-orange-100">
+            Indian Meal Planner
+          </h1>
+        </div>
+        <Card className="w-full max-w-md border-none  shadow-lg p-0">
+          <CardHeader className="bg-orange-500 text-white rounded-t-lg  py-5">
+            <CardTitle className="text-xl text-center">
+              Setup Your Meal Plan
+            </CardTitle>
+            <CardDescription className="text-center text-orange-100">
+              {step === 1 && "Let's set up your meal preferences"}
+              {step === 2 && "Tell us about your dietary needs"}
+              {step === 3 && "Almost done! Just a few more details"}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="">
+            {step === 1 && (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="familySize">
+                    How many people are you cooking for?
+                  </Label>
+                  <Select
+                    defaultValue={preferences.familySize}
+                    onValueChange={(value) => handleChange("familySize", value)}
+                  >
+                    <SelectTrigger
+                      id="familySize"
+                      className="border-orange-200 w-full outline"
+                    >
+                      <SelectValue placeholder="Select family size" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Just me</SelectItem>
+                      <SelectItem value="2">2 people</SelectItem>
+                      <SelectItem value="3">3 people</SelectItem>
+                      <SelectItem value="4">4 people</SelectItem>
+                      <SelectItem value="5">5+ people</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="cuisine">Preferred Cuisine</Label>
+                  <RadioGroup
+                    defaultValue={preferences.cuisine}
+                    onValueChange={(value) => handleChange("cuisine", value)}
+                    className="flex flex-col space-y-2"
+                  >
+                    <div className="flex items-center space-x-2 p-3 rounded-lg border border-orange-200 hover:bg-orange-50">
+                      <RadioGroupItem
+                        value="south-indian"
+                        id="cuisine-south"
+                        className="text-orange-500"
+                      />
+                      <Label
+                        htmlFor="cuisine-south"
+                        className="flex-1 cursor-pointer"
+                      >
+                        South Indian
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2 p-3 rounded-lg border border-orange-200 hover:bg-orange-50">
+                      <RadioGroupItem
+                        value="north-indian"
+                        id="cuisine-north"
+                        className="text-orange-500"
+                      />
+                      <Label
+                        htmlFor="cuisine-north"
+                        className="flex-1 cursor-pointer"
+                      >
+                        North Indian
+                      </Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+              </div>
+            )}
+
+            {step === 2 && (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label>What type of diet do you follow?</Label>
+                  <RadioGroup
+                    defaultValue={preferences.dietType}
+                    onValueChange={(value) => handleChange("dietType", value)}
+                    className="flex flex-col space-y-2"
+                  >
+                    <div className="flex items-center space-x-2 p-3 rounded-lg border border-orange-200 hover:bg-orange-50">
+                      <RadioGroupItem
+                        value="regular"
+                        id="diet-regular"
+                        className="text-orange-500"
+                      />
+                      <Label
+                        htmlFor="diet-regular"
+                        className="flex-1 cursor-pointer"
+                      >
+                        Regular (No restrictions)
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2 p-3 rounded-lg border border-orange-200 hover:bg-orange-50">
+                      <RadioGroupItem
+                        value="vegetarian"
+                        id="diet-vegetarian"
+                        className="text-orange-500"
+                      />
+                      <Label
+                        htmlFor="diet-vegetarian"
+                        className="flex-1 cursor-pointer"
+                      >
+                        Vegetarian
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2 p-3 rounded-lg border border-orange-200 hover:bg-orange-50">
+                      <RadioGroupItem
+                        value="vegan"
+                        id="diet-vegan"
+                        className="text-orange-500"
+                      />
+                      <Label
+                        htmlFor="diet-vegan"
+                        className="flex-1 cursor-pointer"
+                      >
+                        Vegan
+                      </Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+              </div>
+            )}
+
+            {step === 3 && (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="allergies">
+                    Any allergies or foods to avoid?
+                  </Label>
+                  <Input
+                    id="allergies"
+                    placeholder="e.g., nuts, dairy"
+                    value={preferences.allergies}
+                    onChange={(e) => handleChange("allergies", e.target.value)}
+                    className="border-orange-200"
+                  />
+                </div>
+              </div>
+            )}
+          </CardContent>
+          <CardFooter className="pb-6">
+            <Button
+              onClick={handleNext}
+              className="w-full bg-orange-500 hover:bg-orange-600"
+            >
+              {step < 3 ? "Next" : "Create My Meal Plan"}
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
+          </CardFooter>
+        </Card>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    </>
   );
 }

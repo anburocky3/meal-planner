@@ -1,0 +1,61 @@
+export const southIndianIngredients = {
+  Rice: 2,
+  "Idli Rice": 1,
+  "Urad Dal": 1,
+  "Toor Dal": 1,
+  Coconut: 2,
+  "Green Chillies": 10,
+  "Curry Leaves": 2,
+  "Mustard Seeds": 1,
+  Tamarind: 1,
+  "Sambar Powder": 1,
+  "Rasam Powder": 1,
+  "Coriander Leaves": 1,
+  Tomatoes: 5,
+  Onions: 3,
+  Potatoes: 2,
+  Ginger: 1,
+  Garlic: 1,
+  "Turmeric Powder": 1,
+  "Red Chilli Powder": 1,
+  Asafoetida: 1,
+  "Fenugreek Seeds": 1,
+  "Cumin Seeds": 1,
+  "Coriander Seeds": 1,
+  Ghee: 1,
+  "Coconut Oil": 1,
+};
+
+export const northIndianIngredients = {
+  "Wheat Flour": 2,
+  "Basmati Rice": 1,
+  "Rajma (Kidney Beans)": 1,
+  Chickpeas: 1,
+  Paneer: 1,
+  Potatoes: 3,
+  Onions: 3,
+  Tomatoes: 5,
+  Ginger: 1,
+  Garlic: 1,
+  "Green Chillies": 10,
+  "Coriander Leaves": 1,
+  "Cumin Seeds": 1,
+  "Garam Masala": 1,
+  "Turmeric Powder": 1,
+  "Red Chilli Powder": 1,
+  "Coriander Powder": 1,
+  Ghee: 1,
+  Butter: 1,
+  Cream: 1,
+  Yogurt: 1,
+  "Mustard Oil": 1,
+  Cardamom: 1,
+  Cinnamon: 1,
+  Cloves: 1,
+};
+
+export const extractIngredients = (cuisine: string) => {
+  return cuisine === "south-indian"
+    ? southIndianIngredients
+    : northIndianIngredients;
+};
