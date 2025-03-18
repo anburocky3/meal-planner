@@ -240,11 +240,11 @@ export default function MealPlanPage() {
                           className="h-full w-full object-cover"
                         />
                       </div>
-                      <div className="flex-1">
+                      <div className="flex-1 space-y-1">
                         <p className="text-sm font-medium leading-none text-orange-900">
                           {currentMeal.breakfast.name}
                         </p>
-                        <div className="flex gap-2 mt-1">
+                        <div className="flex flex-wrap gap-2 mt-1">
                           <Badge
                             variant="outline"
                             className="text-xs bg-orange-50 text-orange-800"
@@ -282,11 +282,11 @@ export default function MealPlanPage() {
                           className="h-full w-full object-cover"
                         />
                       </div>
-                      <div className="flex-1">
+                      <div className="flex-1 space-y-1">
                         <p className="text-sm font-medium leading-none text-orange-900">
                           {currentMeal.lunch.name}
                         </p>
-                        <div className="flex gap-2 mt-1">
+                        <div className="flex flex-wrap gap-2 mt-1">
                           <Badge
                             variant="outline"
                             className="text-xs bg-orange-50 text-orange-800"
@@ -328,7 +328,7 @@ export default function MealPlanPage() {
                         <p className="text-sm font-medium leading-none text-orange-900">
                           {currentMeal.dinner.name}
                         </p>
-                        <div className="flex gap-2 mt-1">
+                        <div className="flex flex-wrap gap-2 mt-1">
                           <Badge
                             variant="outline"
                             className="text-xs bg-orange-50 text-orange-800"
@@ -370,7 +370,7 @@ export default function MealPlanPage() {
                         <p className="text-sm font-medium leading-none text-orange-900">
                           {currentMeal.snack.name}
                         </p>
-                        <div className="flex gap-2 mt-1">
+                        <div className="flex flex-wrap gap-2 mt-1">
                           <Badge
                             variant="outline"
                             className="text-xs bg-orange-50 text-orange-800"
