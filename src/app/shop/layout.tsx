@@ -10,7 +10,7 @@ export const metadata: Metadata = {
       "Get a comprehensive shopping list of all ingredients needed for your Indian meal plan. Easily check off items and share to WhatsApp.",
     images: [
       {
-        url: "/og-shopping.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Indian Cooking Shopping List",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "Your Indian Cooking Shopping List",
     description:
       "Get a comprehensive shopping list of all ingredients needed for your Indian meal plan. Easily check off items and share to WhatsApp.",
-    images: ["/og-shopping.jpg"],
+    images: ["/og-image.png"],
   },
 };
 

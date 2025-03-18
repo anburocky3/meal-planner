@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "Indian Meal Planner",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Indian Meal Planner - Delicious Recipes and Meal Plans",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     title: "Indian Meal Planner - Personalized South & North Indian Recipes",
     description:
       "Plan and prepare delicious South and North Indian meals with personalized recipes, shopping lists, and meal plans for your diet preferences.",
-    images: ["/twitter-image.jpg"],
+    images: ["/og-image.png"],
     creator: "@indianmealplanner",
   },
   viewport: "width=device-width, initial-scale=1",

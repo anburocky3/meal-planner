@@ -10,7 +10,7 @@ export const metadata: Metadata = {
       "View and manage your personalized South and North Indian meal plan with recipes, preparation times, and ingredients.",
     images: [
       {
-        url: "/og-meal-plan.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Weekly Indian Meal Plan",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "Your Personalized Indian Meal Plan",
     description:
       "View and manage your personalized South and North Indian meal plan with recipes, preparation times, and ingredients.",
-    images: ["/og-meal-plan.jpg"],
+    images: ["/og-image.png"],
   },
 };
 

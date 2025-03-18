@@ -10,7 +10,7 @@ export const metadata: Metadata = {
       "Discover a wide variety of delicious South and North Indian meals with detailed recipes, cooking times, and ingredient information.",
     images: [
       {
-        url: "/og-meals.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Indian Meal Recipes Collection",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "Explore Delicious Indian Meals and Recipes",
     description:
       "Discover a wide variety of delicious South and North Indian meals with detailed recipes, cooking times, and ingredient information.",
-    images: ["/og-meals.jpg"],
+    images: ["/og-image.png"],
   },
 };
 
