@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { Download, X } from "lucide-react";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -18,6 +18,7 @@ export function InstallPWA() {
     useState<BeforeInstallPromptEvent | null>(null);
   const [isInstallable, setIsInstallable] = useState(false);
   const [isIOSDevice, setIsIOSDevice] = useState(false);
+  const [isIOSDismissed, setIsIOSDismissed] = useState(false);
 
   useEffect(() => {
     // Check if device is iOS
@@ -25,6 +26,21 @@ export function InstallPWA() {
       /iPad|iPhone|iPod/.test(navigator.userAgent) &&
       !(window as CustomWindow).MSStream;
     setIsIOSDevice(isIOS);
+
+    // Check if iOS banner was dismissed
+    const isDismissed = localStorage.getItem("pwa_ios_dismissed") === "true";
+    setIsIOSDismissed(isDismissed);
+
+    // Check if app is already installed (running in standalone mode)
+    const isInStandaloneMode =
+      (navigator as any).standalone === true ||
+      window.matchMedia("(display-mode: standalone)").matches;
+
+    if (isInStandaloneMode) {
+      setIsInstallable(false);
+      setIsIOSDevice(false);
+      return;
+    }
 
     // Handle beforeinstallprompt event
     const handleBeforeInstallPrompt = (e: Event) => {
@@ -67,7 +83,13 @@ export function InstallPWA() {
     setIsInstallable(false);
   };
 
-  if (!isInstallable && !isIOSDevice) return null;
+  // Handle iOS dismiss
+  const handleIOSDismiss = () => {
+    localStorage.setItem("pwa_ios_dismissed", "true");
+    setIsIOSDismissed(true);
+  };
+
+  if (!isInstallable && (!isIOSDevice || isIOSDismissed)) return null;
 
   return (
     <div className="fixed bottom-10 right-4 z-50">
@@ -79,13 +101,24 @@ export function InstallPWA() {
         <span className="ml-2">Install App</span>
       </Button>
 
-      {isIOSDevice && (
+      {isIOSDevice && !isIOSDismissed && (
         <div className="mt-2 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg text-sm max-w-xs">
-          <p>To install this app on your iPhone:</p>
-          <ol className="list-decimal pl-5 mt-1">
-            <li>Tap the Share button</li>
-            <li>Scroll down and tap &quot;Add to Home Screen&quot;</li>
-          </ol>
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="font-semibold">Install this app on your iPhone:</p>
+              <ol className="list-decimal pl-5 mt-1">
+                <li>Tap the Share button</li>
+                <li>Scroll down and tap &quot;Add to Home Screen&quot;</li>
+              </ol>
+            </div>
+            <button
+              onClick={handleIOSDismiss}
+              className="ml-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex-shrink-0"
+              aria-label="Dismiss"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       )}
     </div>
