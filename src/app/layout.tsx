@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -7,6 +7,7 @@ import { InstallPWA } from "@/components/pwa/install-prompt";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://indian-meal.vercel.app"),
   title: "Indian Meal Planner - Personalized South & North Indian Recipes",
   description:
     "Plan and prepare delicious South and North Indian meals with personalized recipes, shopping lists, and meal plans for your diet preferences.",
@@ -48,11 +49,6 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
     creator: "@indianmealplanner",
   },
-  viewport: "width=device-width, initial-scale=1",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f97316" },
-    { media: "(prefers-color-scheme: dark)", color: "#1f2937" },
-  ],
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
@@ -64,6 +60,15 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
     capable: true,
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f97316" },
+    { media: "(prefers-color-scheme: dark)", color: "#1f2937" },
+  ],
 };
 
 export default function RootLayout({
@@ -84,15 +89,19 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body className={`${inter.className} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <InstallPWA />
-        </ThemeProvider>
+        <div className="h-screen w-screen flex flex-col overflow-hidden">
+          <div className="flex-1 overflow-y-auto overscroll-contain">
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+              <InstallPWA />
+            </ThemeProvider>
+          </div>
+        </div>
         <script
           dangerouslySetInnerHTML={{
             __html: `

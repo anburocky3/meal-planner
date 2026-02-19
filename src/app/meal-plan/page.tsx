@@ -94,13 +94,13 @@ export default function MealPlanPage() {
       // Generate meal plan based on preferences
       const newMealPlan = generateMealPlan(
         parsedPreferences.cuisine || "south-indian",
-        parsedPreferences.dietType || "regular"
+        parsedPreferences.dietType || "regular",
       );
       setMealPlan(newMealPlan);
 
       // Extract ingredients
       const ingredientsList = extractIngredients(
-        parsedPreferences.cuisine || "south-indian"
+        parsedPreferences.cuisine || "south-indian",
       );
       setIngredients(ingredientsList);
     } else {
@@ -241,7 +241,7 @@ export default function MealPlanPage() {
                         />
                       </div>
                       <div className="flex-1 space-y-1">
-                        <p className="text-sm font-medium leading-none text-orange-900">
+                        <p className="text-sm font-medium leading-none text-orange-900 mb-2">
                           {currentMeal.breakfast.name}
                         </p>
                         <div className="flex flex-wrap gap-2 mt-1">
@@ -283,7 +283,7 @@ export default function MealPlanPage() {
                         />
                       </div>
                       <div className="flex-1 space-y-1">
-                        <p className="text-sm font-medium leading-none text-orange-900">
+                        <p className="text-sm font-medium leading-5 text-orange-900 mb-2">
                           {currentMeal.lunch.name}
                         </p>
                         <div className="flex flex-wrap gap-2 mt-1">
@@ -325,7 +325,7 @@ export default function MealPlanPage() {
                         />
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium leading-none text-orange-900">
+                        <p className="text-sm font-medium leading-none text-orange-900 mb-2">
                           {currentMeal.dinner.name}
                         </p>
                         <div className="flex flex-wrap gap-2 mt-1">
@@ -367,7 +367,7 @@ export default function MealPlanPage() {
                         />
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium leading-none text-orange-900">
+                        <p className="text-sm font-medium leading-none text-orange-900 mb-2">
                           {currentMeal.snack.name}
                         </p>
                         <div className="flex flex-wrap gap-2 mt-1">
@@ -497,7 +497,9 @@ export default function MealPlanPage() {
                     >
                       <div className="flex items-center">
                         <div className="h-4 w-4 rounded-full border border-orange-500 mr-2"></div>
-                        <span className="text-orange-900">{ingredient}</span>
+                        <span className="text-orange-900 text-sm">
+                          {ingredient}
+                        </span>
                       </div>
                       <Badge
                         variant="outline"

@@ -140,7 +140,7 @@ export default function MealsPage() {
                     className="object-cover"
                   />
                 </div>
-                <CardHeader className="p-4 pb-2">
+                <CardHeader className="px-4 ">
                   <CardTitle className="text-orange-800">{meal.name}</CardTitle>
                   <div className="flex gap-2 mt-1">
                     <Badge
@@ -159,7 +159,7 @@ export default function MealsPage() {
                     </Badge>
                   </div>
                 </CardHeader>
-                <CardContent className="p-4 pt-2">
+                <CardContent className="px-4">
                   <h4 className="font-medium text-sm text-orange-600 mb-2">
                     Ingredients:
                   </h4>

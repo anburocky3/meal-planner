@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronRight, Utensils } from "lucide-react";
+import { ChevronRight, ChevronLeft, Utensils } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -46,6 +46,12 @@ export default function Home() {
       // Save preferences to localStorage for use in meal plan page
       localStorage.setItem("mealPreferences", JSON.stringify(preferences));
       router.push("/meal-plan");
+    }
+  };
+
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
     }
   };
 
@@ -228,10 +234,20 @@ export default function Home() {
               </div>
             )}
           </CardContent>
-          <CardFooter className="pb-6">
+          <CardFooter className="pb-6 flex gap-3">
+            {step > 1 && (
+              <Button
+                onClick={handleBack}
+                variant="outline"
+                className="flex-1 border-orange-500 text-orange-500 hover:bg-orange-50"
+              >
+                <ChevronLeft className="mr-2 h-4 w-4" />
+                Back
+              </Button>
+            )}
             <Button
               onClick={handleNext}
-              className="w-full bg-orange-500 hover:bg-orange-600"
+              className={`${step > 1 ? "flex-1" : "w-full"} bg-orange-500 hover:bg-orange-600`}
             >
               {step < 3 ? "Next" : "Create My Meal Plan"}
               <ChevronRight className="ml-2 h-4 w-4" />

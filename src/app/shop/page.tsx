@@ -36,7 +36,7 @@ export default function ShopPage() {
 
       // Extract ingredients based on preferences
       const ingredientsList = extractIngredients(
-        parsedPreferences.cuisine || "south-indian"
+        parsedPreferences.cuisine || "south-indian",
       );
       setIngredients(ingredientsList);
     } else {
@@ -63,7 +63,7 @@ export default function ShopPage() {
         return `${ingredient} - ${quantity}${
           quantity > 1 &&
           !["Rice", "Ghee", "Oil", "Butter", "Salt", "Powder"].some((item) =>
-            ingredient.includes(item)
+            ingredient.includes(item),
           )
             ? " pcs"
             : ""
@@ -164,7 +164,7 @@ export default function ShopPage() {
                     />
                     <label
                       htmlFor={`ingredient-${ingredient}`}
-                      className="text-orange-900 cursor-pointer flex-1"
+                      className="text-orange-900 text-sm cursor-pointer flex-1"
                     >
                       {ingredient}
                     </label>
@@ -176,7 +176,7 @@ export default function ShopPage() {
                     {quantity}{" "}
                     {quantity > 1 &&
                     !["Rice", "Ghee", "Oil", "Butter", "Salt", "Powder"].some(
-                      (item) => ingredient.includes(item)
+                      (item) => ingredient.includes(item),
                     )
                       ? "pcs"
                       : ""}

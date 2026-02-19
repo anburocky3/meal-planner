@@ -225,7 +225,7 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-none shadow-md dark:bg-gray-800 dark:text-gray-100 py-0 ">
+        {/* <Card className="border-none shadow-md dark:bg-gray-800 dark:text-gray-100 py-0 ">
           <CardHeader className="bg-orange-100 dark:bg-gray-700 rounded-t-lg py-4">
             <CardTitle className="text-orange-800 dark:text-gray-100">
               Account
@@ -245,7 +245,7 @@ export default function SettingsPage() {
               Reset All Preferences
             </Button>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
 
       <BottomNavigation />
